@@ -11,31 +11,31 @@ export default function Counter() {
     loadGames();
   }, []);
 
-  const loadGames = async () => {
-    const result: any = await fetchGames();
-    setGames(result.rows._array);
+  const loadGames = () => {
+    const result: any = fetchGames();
+    setGames(result);
   };
 
-  const handleAddGame = async () => {
+  const handleAddGame = () => {
     if (gameName.trim() !== '') {
-      await insertGame(gameName, 0);
+      insertGame(gameName, 0);
       setGameName('');
       loadGames();
     }
   };
 
-  const handleIncrement = async (id: number, score: number) => {
-    await updateGame(id, games.find(g => g.id === id).name, score + 1);
+  const handleIncrement = (id: number, score: number) => {
+    updateGame(id, games.find(g => g.id === id).name, score + 1);
     loadGames();
   };
 
-  const handleDecrement = async (id: number, score: number) => {
-    await updateGame(id, games.find(g => g.id === id).name, score - 1);
+  const handleDecrement = (id: number, score: number) => {
+    updateGame(id, games.find(g => g.id === id).name, score - 1);
     loadGames();
   };
 
-  const handleDeleteGame = async (id: number) => {
-    await deleteGame(id);
+  const handleDeleteGame = (id: number) => {
+    deleteGame(id);
     loadGames();
   };
 

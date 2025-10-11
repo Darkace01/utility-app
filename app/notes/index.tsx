@@ -13,23 +13,23 @@ export default function Notes() {
     loadNotes();
   }, []);
 
-  const loadNotes = async () => {
-    const result: any = await fetchNotes();
-    setNotes(result.rows._array);
+  const loadNotes = () => {
+    const result: any = fetchNotes();
+    setNotes(result);
   };
 
-  const handleAddNote = async () => {
+  const handleAddNote = () => {
     if (title.trim() !== '' && content.trim() !== '') {
-      await insertNote(title, content);
+      insertNote(title, content);
       setTitle('');
       setContent('');
       loadNotes();
     }
   };
 
-  const handleUpdateNote = async () => {
+  const handleUpdateNote = () => {
     if (selectedNote && title.trim() !== '' && content.trim() !== '') {
-      await updateNote(selectedNote.id, title, content);
+      updateNote(selectedNote.id, title, content);
       setTitle('');
       setContent('');
       setSelectedNote(null);
@@ -37,8 +37,8 @@ export default function Notes() {
     }
   };
 
-  const handleDeleteNote = async (id: number) => {
-    await deleteNote(id);
+  const handleDeleteNote = (id: number) => {
+    deleteNote(id);
     loadNotes();
   };
 

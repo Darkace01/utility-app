@@ -6,14 +6,13 @@ import { init } from '../db/db';
 
 export default function Layout() {
   useEffect(() => {
-    init()
-      .then(() => {
-        console.log('Database initialized');
-      })
-      .catch(err => {
-        console.log('Database initialization failed');
-        console.log(err);
-      });
+    try {
+      init();
+      console.log('Database initialized');
+    } catch (err) {
+      console.log('Database initialization failed');
+      console.log(err);
+    }
   }, []);
 
   return (
