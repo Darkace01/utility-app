@@ -1,59 +1,60 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Drawer } from 'expo-router/drawer';
 import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { init } from '../db/db';
 
-import { useColorScheme } from '@/components/useColorScheme';
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+export default function Layout() {
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+    init()
+      .then(() => {
+        console.log('Database initialized');
+      })
+      .catch(err => {
+        console.log('Database initialization failed');
+        console.log(err);
+      });
+  }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer>
+        <Drawer.Screen
+          name="index" // This is the default route.
+          options={{
+            drawerLabel: 'Home',
+            title: 'Home',
+          }}
+        />
+        <Drawer.Screen
+          name="calculator/index" // This is the route to the calculator screen.
+          options={{
+            drawerLabel: 'Calculator',
+            title: 'Calculator',
+          }}
+        />
+        <Drawer.Screen
+          name="counter/index" // This is the route to the counter screen.
+          options={{
+            drawerLabel: 'Counter',
+            title: 'Counter',
+          }}
+        />
+        <Drawer.Screen
+          name="notes/index" // This is the route to the notes screen.
+          options={{
+            drawerLabel: 'Notes',
+            title: 'Notes',
+          }}
+        />
+        <Drawer.Screen
+          name="game/index" // This is the route to the game screen.
+          options={{
+            drawerLabel: 'Game',
+            title: 'Game',
+          }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
