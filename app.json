@@ -23,7 +23,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-        "package": "com.beeresoftwares.utilityapp"
+      "package": "com.beeresoftwares.utilityapp"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +35,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3bac286a-1401-4123-85d0-fbd038032d5f"
+      }
     }
   }
 }
